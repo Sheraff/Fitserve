@@ -1,0 +1,31 @@
+{
+  "name": "fitserve",
+  "version": "0.1.0",
+  "description": "simple node server to get Fitbit data w/ oauth",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Sheraff/Fitserve.git"
+  },
+  "keywords": [
+    "fitbit",
+    "oauth2",
+    "server",
+    "bitbar",
+    "electron"
+  ],
+  "author": "Florian Pellet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sheraff/Fitserve/issues"
+  },
+  "homepage": "https://github.com/Sheraff/Fitserve#readme",
+  "dependencies": {
+    "ngrok": "^3.1.1",
+    "opn": "^6.0.0",
+    "simple-oauth2": "^2.2.1"
+  }
+}
