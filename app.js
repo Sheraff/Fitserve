@@ -80,9 +80,22 @@ token.get()
 
 
 server.start(async (req, res) => {
-    let response = ''
+    
 
     if (server.ready) {
+        if (req.url==='/') {
+            res.statusCode = 200
+            res.setHeader('Content-Type', 'text/html; charset=utf-8')
+            res.end(`
+                <a href="/calories">calories</a><br>
+                <a href="/heart">heart</a><br>
+                <a href="/sleep">sleep</a><br>
+                <a href="/devices">devices</a><br>
+                <a href="/weight">weight</a><br>
+            `)
+            return
+        }
+        let response = ''
         switch (req.url) {
             case '/calories':
                 try { response = await calories() } catch { console.error('problem with calories()') }
