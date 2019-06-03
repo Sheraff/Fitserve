@@ -74,4 +74,5 @@ typings/
 
 # FuseBox cache
 .fusebox/
-token.json
+data/token.json
+data/secret.js

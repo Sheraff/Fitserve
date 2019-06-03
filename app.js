@@ -1,13 +1,12 @@
-const user_id = 'xxx'
-const client_id = 'xxx'
-const client_secret = 'xxx'
+const secret = require('./data/secret')
+console.log(secret.user_id)
 const scope = ['activity', 'nutrition', 'heartrate', 'location', 'nutrition', 'profile', 'settings', 'sleep', 'social', 'weight'].join(' ')
 const distant = 's.florianpellet.com/fitbit/'
 const api_version = '1.2'
 const oauth2 = require('simple-oauth2').create({
     client: {
-        id: client_id,
-        secret: client_secret
+        id: secret.client_id,
+        secret: secret.client_secret
     },
     auth: {
         tokenHost: 'https://api.fitbit.com/',
@@ -15,9 +14,6 @@ const oauth2 = require('simple-oauth2').create({
         revokePath: 'oauth2/revoke',
         authorizeHost: 'https://www.fitbit.com/',
         authorizePath: 'oauth2/authorize'
-    },
-    options: {
-        useBasicAuthorizationHeader: true
     }
 })
 
@@ -288,7 +284,7 @@ class Token {
             return Promise.resolve(self.token)
 
         return new Promise((resolve, reject) => {
-            self.fs.readFile('token.json', 'utf8', function(err, json) {
+            self.fs.readFile('data/token.json', 'utf8', function(err, json) {
                 if (err) 
                     return reject()
                 json = JSON.parse(json)
@@ -303,7 +299,7 @@ class Token {
     async store(token) {
         const self = this
         self.token = token
-        self.fs.writeFile('token.json', JSON.stringify(token.token), 'utf8', (err) => {
+        self.fs.writeFile('data/token.json', JSON.stringify(token.token), 'utf8', (err) => {
             if (err) 
                 console.error(err)
         })
@@ -316,7 +312,7 @@ function getActivity(token) {
         const https = require('https')
         const date = new Date().toISOString().slice(0,10)
         const path = `activities/date/${date}.json`
-        const url = `https://api.fitbit.com/${api_version}/user/${user_id}/${path}`
+        const url = `https://api.fitbit.com/${api_version}/user/${secret.user_id}/${path}`
         console.log(`getting data from ${url}`)
         const options = {
             method: 'GET',
