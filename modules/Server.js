@@ -1,7 +1,7 @@
 class Server {
     constructor () {
         this.http = require('http')
-        this.host = 'localhost'
+        this.host = '0.0.0.0'
         this.port = 3000
         this.server
         this.states = {}
