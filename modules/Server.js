@@ -1,17 +1,17 @@
 class Server {
     constructor () {
         this.http = require('http')
-        this.host = '0.0.0.0'
+        this.host = '127.0.0.1'
         this.port = 3000
         this.server
         this.states = {}
         this.tunnel
-        this.ready = false
 
         this.sockets = {}
         this.nextSocketId = 0
 
         this.start = this.start.bind(this)
+        this.createServer = this.createServer.bind(this)
         this.getPort = this.getPort.bind(this)
         this.getTunnel = this.getTunnel.bind(this)
         this.resolveOn = this.resolveOn.bind(this)
@@ -19,7 +19,11 @@ class Server {
 
     start(callback) {
         const self = this
-        self.server = self.http.createServer(callback)
+
+        if(callback)
+            self.server = self.http.createServer(callback)
+        if(!self.server)
+            return Promise.reject('you must either call Server.createServer before, or you have to call Server.start with a callback argument')
 
         // used to prooperly kill the server once we don't need it
         self.server.on('connection', function (socket) {
@@ -36,6 +40,14 @@ class Server {
             })
             .catch(reject)
         })
+    }
+
+    createServer(callback) {
+        const self = this
+        if(self.server)
+            return Promise.reject('you cant change the servers callback once it has already started listening')
+        self.server = self.http.createServer(callback)
+        return Promise.resolve()
     }
 
     // find port by iterating on 'EADDRINUSE' errors starting at `port` argument until one is available
