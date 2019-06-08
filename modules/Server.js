@@ -20,7 +20,7 @@ class Server {
     start(callback) {
         const self = this
 
-        if(callback)
+        if(typeof callback === 'function')
             self.server = self.http.createServer(callback)
         if(!self.server)
             return Promise.reject('you must either call Server.createServer before, or you have to call Server.start with a callback argument')
@@ -36,7 +36,7 @@ class Server {
             self.getPort(self.port)
             .then((port) => {
                 self.port = port
-                self.server.listen(port, self.host, () => resolve(port))
+                self.server.listen(port, self.host, () => resolve({port, host: self.host}))
             })
             .catch(reject)
         })
@@ -58,7 +58,7 @@ class Server {
             .on('error', error => error.code === 'EADDRINUSE' ? server.listen(++port, self.host) : reject(error))
             .on('listening', () => server.close(() => {
                 console.log(`found port ${port} available for host ${self.host}`)
-                resolve(port)
+                resolve(port, self.host)
             }))
             .listen(port, self.host)
         )
@@ -144,7 +144,7 @@ class Server {
     }
 
     close() {
-        this.server.close(() => console.log('Server closed!'))
+        // this.server.close(() => console.log('Server closed!'))
         for (const socketId in this.sockets) {
             this.sockets[socketId].destroy()
         }

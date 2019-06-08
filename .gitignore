@@ -74,5 +74,8 @@ typings/
 
 # FuseBox cache
 .fusebox/
+
+# Logins & generated files
 data/token.json
 data/secret.js
+data/root.txt

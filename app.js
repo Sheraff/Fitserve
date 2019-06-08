@@ -8,9 +8,12 @@ const API    = require('./modules/API')
 let killTimeoutID
 function kill () {
     clearTimeout(killTimeoutID)
-    killTimeoutID = setTimeout(process.exit, 10*60*1000)
+    killTimeoutID = setTimeout(() => {
+        fs.unlink(__dirname+'/data/root.txt', process.exit)
+    }, 10*60*1000)
 }
 kill()
+process.title = 'Fitserve'
 
 server.createServer(async (req, res) => {
     
@@ -52,5 +55,14 @@ server.createServer(async (req, res) => {
 })
 
 token.get()
-.then(() => server.start())
+.then(server.start)
+.then(({port, host}) => {
+    const fs = require('fs')
+    const url = `http://${host}:${port}`
+    fs.writeFile(__dirname+'/data/root.txt', url, 'utf8', (err) => {
+        if (err) 
+            console.error(err)
+    })
+    console.log(url)
+})
 .catch((e) => console.error('WTF ?!', e))

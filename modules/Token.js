@@ -136,7 +136,7 @@ class Token {
             return Promise.resolve(self.token)
 
         return new Promise((resolve, reject) => {
-            self.fs.readFile('data/token.json', 'utf8', function(err, json) {
+            self.fs.readFile(__dirname+'/../data/token.json', 'utf8', function(err, json) {
                 if (err) 
                     return reject()
                 json = JSON.parse(json)
@@ -151,7 +151,7 @@ class Token {
     async store(token) {
         const self = this
         self.token = token
-        self.fs.writeFile('data/token.json', JSON.stringify(token.token), 'utf8', (err) => {
+        self.fs.writeFile(__dirname+'/../data/token.json', JSON.stringify(token.token), 'utf8', (err) => {
             if (err) 
                 console.error(err)
         })
