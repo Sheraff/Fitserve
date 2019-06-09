@@ -51,7 +51,7 @@ module.exports.devices = async (token) => {
     const result = await callAPI(token, `devices.json`)
     return result
         .map(device => `${device.deviceVersion} (battery ${device.battery.toLowerCase()})`)
-        .join(', ')
+        .join('\n')
 }
 
 module.exports.weight = async (token) => {

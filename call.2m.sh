@@ -23,6 +23,7 @@ else
 	echo "$calories kcal"
 	echo "$(curl -sS $url/heart) bpm"
 	echo "$(curl -sS $url/weight) kg"
+	echo "---"
 	echo "$(curl -sS $url/devices)"
 	echo "---"
 	echo "$url | href=$url"
