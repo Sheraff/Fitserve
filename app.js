@@ -34,19 +34,19 @@ server.createServer(async (req, res) => {
     let response = ''
     switch (req.url) {
         case '/calories':
-            try { response = await token.get().then(API.calories) } catch { console.error('problem with calories()') }
+            try { response = await token.get().then(API.calories) } catch (e) { console.error('problem with calories()', e) }
             break;
         case '/heart':
-            try { response = await token.get().then(API.heart) }    catch { console.error('problem with heart()') }
+            try { response = await token.get().then(API.heart) }    catch (e) { console.error('problem with heart()', e) }
             break;
         case '/sleep':
-            try { response = await token.get().then(API.sleep) }    catch { console.error('problem with sleep()') }
+            try { response = await token.get().then(API.sleep) }    catch (e) { console.error('problem with sleep()', e) }
             break;
         case '/devices':
-            try { response = await token.get().then(API.devices) }  catch { console.error('problem with devices()') }
+            try { response = await token.get().then(API.devices) }  catch (e) { console.error('problem with devices()', e) }
             break;
         case '/weight':
-            try { response = await token.get().then(API.weight) }   catch { console.error('problem with weight()') }
+            try { response = await token.get().then(API.weight) }   catch (e) { console.error('problem with weight()', e) }
             break;
     }
     res.statusCode = 200
